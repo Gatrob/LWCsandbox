@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AI_Support_Engineer__c</fullName>
+    <externalId>false</externalId>
+    <label>AI Support Engineer</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Kevin B</fullName>
+                <default>false</default>
+                <label>Kevin B</label>
+            </value>
+            <value>
+                <fullName>Anh A</fullName>
+                <default>false</default>
+                <label>Anh A</label>
+            </value>
+            <value>
+                <fullName>Ben H</fullName>
+                <default>false</default>
+                <label>Ben H</label>
+            </value>
+            <value>
+                <fullName>Brian M</fullName>
+                <default>false</default>
+                <label>Brian M</label>
+            </value>
+            <value>
+                <fullName>Patrick H</fullName>
+                <default>false</default>
+                <label>Patrick H</label>
+            </value>
+            <value>
+                <fullName>SamB</fullName>
+                <default>false</default>
+                <label>SamB</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

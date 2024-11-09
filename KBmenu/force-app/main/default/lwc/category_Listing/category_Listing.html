@@ -1,0 +1,32 @@
+<template>
+    <div class="slds-m-around_medium">
+        <template if:true={articles}>
+            <section class="category_articles">
+                <div class="container">
+                    <h2>{categoryName}</h2>
+                    <span class="num_of_docs">{articles.length} docs</span>
+                    <div class="articles_listing">
+                        <template for:each={articles} for:item="article">
+                            <div class="article_block" key={article.Id}>
+                                <div class="article_block-inner">
+                                    <!-- <span class="article_type">{article.Type}</span> -->
+                                    <h3><a href={article.articleUrl}>{article.Title}</a></h3>
+                                    <p if:true={article.Summary}>{article.Summary}</p>
+                                    <!-- <lightning-formatted-rich-text value={article.trimmedDescription}></lightning-formatted-rich-text>
+                                    <lightning-formatted-rich-text value={article.trimmedContent}></lightning-formatted-rich-text>
+                                    <lightning-formatted-rich-text value={article.trimmedAnswer}></lightning-formatted-rich-text> -->
+                                </div>
+                            </div>
+                        </template>
+                        <!-- <template if:true={totalArticles > currentPage * ARTICLES_PER_PAGE}>
+                            <button onclick={handleLoadMore}>Load More</button>
+                        </template> -->
+                    </div>
+                </div>
+            </section>
+        </template>
+        <template if:true={error}>
+            <p>Error: {error}</p>
+        </template>
+    </div>
+</template>

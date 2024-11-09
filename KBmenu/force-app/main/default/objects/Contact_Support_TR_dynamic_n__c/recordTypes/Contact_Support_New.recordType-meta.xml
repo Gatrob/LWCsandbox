@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Support_New</fullName>
+    <active>true</active>
+    <label>Contact Support New</label>
+    <picklistValues>
+        <picklist>Impact_and_Severity__c</picklist>
+        <values>
+            <fullName>Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Significant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Issue_Category__c</picklist>
+        <values>
+            <fullName>First Choice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Choice</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Issue_Type__c</picklist>
+        <values>
+            <fullName>Scripting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Testing</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

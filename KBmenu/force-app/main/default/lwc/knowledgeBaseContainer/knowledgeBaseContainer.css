@@ -1,0 +1,524 @@
+/* Base styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  background-color: #ffffff;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: row;
+  width: 100%;
+}
+
+/* Menu styles */
+.menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 350px;
+  overflow-y: auto;
+  background-color: transparent;
+  border-right: 1px solid #ddd;
+  z-index: 1000;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Content area styles */
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 350px;
+  padding-top: 60px; /* Adjust this value if you have a header */
+  overflow: visible;
+  background-color: #ffffff;
+  min-height: 100vh;
+  font-size: 14pt;
+  line-height: 1.714;
+}
+
+
+/* Typography for content area */
+.content h1 {
+  font-size: 28pt;
+  color: #004578;
+  margin-bottom: 20px;
+}
+
+.content h2 {
+  font-size: 22pt;
+  color: #0056b3;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 40px;
+}
+
+.content h3 {
+  font-size: 18pt;
+  color: #0078d4;
+  margin-bottom: 20px;
+}
+
+.content h4 {
+  font-size: 16pt;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.content p {
+  margin-bottom: 20px;
+}
+
+.content a {
+  color: #0078d4;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.content ul, .content ol {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.content li {
+  font-size: 14pt;
+  line-height: 1.714;
+}
+
+/* Preformatted text */
+.content pre {
+  background-color: #f6f8fa;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14pt;
+  line-height: 1.714;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+/* Table of Contents styles */
+.toc-container {
+  margin-bottom: 40px;
+}
+
+.toc-title {
+  font-size: 22pt;
+  color: #0056b3;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.toc-link {
+  color: #0078d4;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.toc-separator {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 5px 0;
+}
+
+/* Menu header styles */
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #004578;
+  color: white;
+}
+
+.menu-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.close-button {
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #e0e0e0;
+}
+
+/* Menu list styles */
+.menu ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.menu li {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition:  color 0.3s;
+}
+
+/* Submenu styles */
+.submenu {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+
+.show-menu-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #0078d4;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.submenu-item {
+  padding: 8px 16px;
+  padding-left: 64px;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: color 0.3s;
+  color: #333;
+}
+
+/* Menu visibility toggle */
+.menu-hidden .menu {
+  transform: translateX(-100%);
+}
+
+.menu-hidden .content {
+  margin-left: 0;
+}
+
+/* Show Menu Button styles */
+.show-menu-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #0078d4;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.show-menu-button:hover {
+  background-color: #0056b3;
+}
+
+.show-menu-button:active {
+  transform: scale(0.98);
+}
+
+/* Hide unwanted elements */
+div.background-image-overlay.lwc-6j9an5vbrcd,
+footer, 
+.footer {
+  display: none;
+}
+
+/* Menu item layout */
+.menu-item {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Submenu toggle icon */
+.submenu-toggle {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submenu-toggle:hover {
+  color: inherit;
+}
+
+/* Rotate toggle icon when submenu is expanded */
+.submenu-toggle.expanded {
+  transform: rotate(90deg);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .menu {
+    width: 300px;
+  }
+
+  .content {
+    margin-left: 300px;
+  }
+
+  .menu-hidden .content {
+    margin-left: 0;
+  }
+
+  .content h1 {
+    font-size: 24pt;
+  }
+
+  .content h2 {
+    font-size: 20pt;
+  }
+
+  .content h3 {
+    font-size: 16pt;
+  }
+
+  .content h4 {
+    font-size: 14pt;
+  }
+
+  .content, .content p, .content li {
+    font-size: 12pt;
+  }
+}
+
+/* Improve scrollbar appearance for webkit browsers */
+.menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.menu::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 4px;
+}
+
+.menu::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+
+/* Hamburger Icon */
+.hamburger-icon {
+  width: 20px;
+  height: 14px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after,
+.hamburger-icon .middle-bar {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  position: absolute;
+  transition: transform 0.3s ease-in-out;
+}
+
+.hamburger-icon::before {
+  top: 0;
+}
+
+.hamburger-icon::after {
+  bottom: 0;
+}
+
+.hamburger-icon .middle-bar {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.show-menu-button span {
+  display: none;
+}
+
+.hamburger-bar {
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.show-menu-button:hover .hamburger-bar {
+  background-color: #e0e0e0;
+}
+
+
+/* Added hover effect for individual submenu items */
+.submenu .submenu-item:hover {
+  background-color: transparent; /* No background change */
+  color: #0078d4; /* Change text color of submenu items on hover */
+}
+
+
+
+.submenu .submenu-item {
+  color: inherit;
+  transition: color 0.3s;
+  padding: 8px 0;
+  font-size: 0.95em;
+  cursor: pointer;
+}
+
+.submenu .submenu-item:hover {
+  color: #0078d4;
+}
+
+.menu > ul > li,
+.menu > ul > li > .menu-item,
+.submenu .submenu-item {
+  color: inherit;
+  transition: color 0.3s;
+}
+
+.menu ul li:hover,
+.menu ul li .menu-item:hover,
+.menu ul li .submenu .submenu-item:hover {
+  background-color: transparent !important;
+}
+
+.menu > ul > li:hover > .submenu > .submenu-item:not(:hover) {
+  color: #333 !important;
+}
+
+.menu > ul > li:hover .submenu-toggle {
+  color: #333 !important;
+}
+
+.menu > ul > li > .submenu > .submenu-item:hover {
+  color: #0078d4 !important;
+}
+
+.menu > ul > li:hover,
+.menu > ul > li:hover > .menu-item {
+  color: #0078d4 !important;
+}
+
+.menu ul li,
+.menu ul li .menu-item,
+.menu ul li .submenu .submenu-item {
+  color: #333 !important;
+  transition: color 0.3s ease;
+}
+
+.nested-submenu {
+  margin-left: 10px;
+  border-left: 1px solid #ddd;
+  padding-left: 20px;
+}
+
+.menu ul li:hover .submenu-toggle {
+  color: #333;
+}
+
+.menu li[data-tab="directorConfiguration"] .submenu-toggle {
+  visibility: hidden;
+}
+
+.menu-item > span {
+  margin-left: 8px;
+}
+
+.menu ul li {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.menu-item.level-1 {
+  padding-left: 8px;
+}
+
+.menu-item.level-2 {
+  padding-left: 28px;
+}
+
+.menu-item.level-3 {
+  padding-left: 48px;
+}
+
+.placeholder {
+  width: 24px;
+  height: 24px;
+  visibility: hidden;
+}
+
+.menu-item > span {
+  flex: 1;
+  padding-left: 0;
+}
+
+.submenu .menu-item,
+.nested-submenu .menu-item {
+  padding: 8px 20px;
+}
+
+.menu-item > span:hover {
+  color: #0078d4;
+}
+
+.menu > ul > li > .menu-item {
+  padding-left: 16px;
+}
+.submenu > li > .menu-item {
+  padding-left: 32px;
+}
+
+.nested-submenu > li > .menu-item,
+.nested-submenu .submenu-item {
+  padding-left: 48px;
+}
+
+.menu-item:hover > span {
+  color: #0078d4;
+}
+
+.menu > ul > li:not(:has(.menu-item)) {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+  padding: 12px 16px;
+  padding-left: 40px; /* 16px + 24px to align with other menu items */
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
+
+
+}
+
+.menu > ul > li:not(:has(.menu-item)):hover {
+  color: #0078d4;
+}

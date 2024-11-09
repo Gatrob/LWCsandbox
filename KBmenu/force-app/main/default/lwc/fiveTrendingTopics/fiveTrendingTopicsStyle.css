@@ -1,0 +1,39 @@
+.container {
+  --clrg: #A1A1A1;  
+}
+.trend-sec{
+    padding: 0 10px;
+}
+h2{
+    font-size: 24px !important;
+    font-weight: 700;
+}
+.trend-list li {
+    border-top: 2px solid var(--clrg);
+    padding: 10px 8px;
+}
+.trend-list li:last-child {
+    border-bottom: 2px solid var(--clrg);                        
+}                
+.trend-list h3 {
+   font-size: 16px;
+}
+.trend-list p {
+    font-size: 14px !important;
+}
+.trend-list p a:hover {
+    text-decoration: none;
+}
+@media(max-width: 1024px){
+    h2{
+        text-align: center;
+    }
+    .trend-list {
+        text-align: center;                         
+    }                   
+}
+@media(max-width: 767px){                        
+    .phses-item {
+        margin-right: 0;                            
+    } 
+}
