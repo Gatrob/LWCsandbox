@@ -163,7 +163,7 @@ html, body {
 }
 
 .menu li {
-  padding: 12px 20px;
+  padding: 6px 16px;
   cursor: pointer;
   transition:  color 0.3s;
 }
@@ -178,17 +178,18 @@ html, body {
 
 .show-menu-button {
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 0;
+  left: 0;
   width: 40px;
-  height: 40px;
+  height: 100%; /* Make it full height */
   background-color: #0078d4;
   border: none;
-  border-radius: 4px;
+  border-radius: 0; /* Remove border radius for full-height look */
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease-in-out;
   z-index: 1000;
 }
 
@@ -207,26 +208,9 @@ html, body {
 }
 
 .menu-hidden .content {
-  margin-left: 0;
+  margin-left: 40px;
 }
 
-/* Show Menu Button styles */
-.show-menu-button {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  width: 40px;
-  height: 40px;
-  background-color: #0078d4;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease-in-out;
-  z-index: 1000;
-}
 
 .show-menu-button:hover {
   background-color: #0056b3;
@@ -249,7 +233,7 @@ footer,
   grid-template-columns: 24px 1fr;
   align-items: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 6px 16px;
   color: #333;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -483,7 +467,7 @@ footer,
 
 .submenu .menu-item,
 .nested-submenu .menu-item {
-  padding: 8px 20px;
+  padding: 4px 20px;
 }
 
 .menu-item > span:hover {
@@ -510,7 +494,7 @@ footer,
   display: grid;
   grid-template-columns: 24px 1fr;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 6px 16px;
   padding-left: 40px; /* 16px + 24px to align with other menu items */
   cursor: pointer;
   color: #333;
@@ -519,6 +503,159 @@ footer,
 
 }
 
+.menu > ul > li:not(:last-child) {
+  margin-bottom: 2px;
+}
+
 .menu > ul > li:not(:has(.menu-item)):hover {
   color: #0078d4;
+}
+
+/* Add these styles to your existing CSS */
+.custom-note {
+  border-left: 3px solid #0078d4 !important;
+  padding-left: 15px !important;
+  margin: 20px 0 !important;
+  background-color: #f0f8ff !important;
+}
+
+.custom-note .slds-text-heading_small {
+  font-weight: normal;
+  color: #333;
+  margin-bottom: 16px !important;
+}
+
+.custom-note p {
+  margin-bottom: 16px;
+}
+
+.custom-note ul {
+  padding-left: 20px !important;
+  list-style-type: disc !important;
+}
+
+.custom-note li {
+  margin: 8px 0 !important;
+}
+
+.custom-note a {
+  color: #0078d4 !important;
+  text-decoration: none !important;
+}
+
+.custom-note a:hover {
+  text-decoration: underline !important;
+}
+
+/* Remove all SLDS-specific styling that might interfere */
+.custom-note.slds-box {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.custom-note .slds-list_dotted li:before {
+  content: none !important;
+}
+
+/* Add these to your CSS file */
+.article-content button,
+.article-content .slds-button {
+    background-color: #0078d4 !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    margin: 8px 0 !important;
+    font-size: 14pt !important;
+    display: inline-block !important;
+    text-decoration: none !important;
+}
+
+.article-content .view-screenshot-btn {
+  background: #1589ee;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  display: inline-block;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Override any potential hiding */
+.article-content button[class*="View"],
+.article-content a[class*="View"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.article-content button.view-screenshot-btn {
+  background-color: #0078d4;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 8px 0;
+  font-size: 14pt;
+}
+
+.article-content .screenshot-section {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.screenshot-caption {
+  font-size: 14pt;
+  color: #666;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.screenshot-section img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.content h2 + ul {
+  border: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.content h2:first-of-type {
+  font-size: 16pt;
+  color: #444;
+  border: none;
+  padding-bottom: 0;
+  margin-bottom: 15px;
+}
+
+/* Style for the "In This Article" links */
+.content h2 + ul li {
+  margin-bottom: 8px;
+  list-style: none;
+}
+
+.content h2 + ul li a {
+  color: #0070d2;
+  font-weight: normal;
+  font-size: 14pt;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.content h2 + ul li a:hover {
+  color: #005fb2;
+  text-decoration: underline;
 }

@@ -7,6 +7,7 @@ export default class KnowledgeBaseContainer extends LightningElement {
     @track selectedArticleTitle = '';
     @track isMenuVisible = true;
     @track isUsersAndRoles = false;
+    @track articleContentItems = [];
 
     // State variables for submenu expansion
     @track isSetupConfigExpanded = false;
@@ -54,6 +55,22 @@ export default class KnowledgeBaseContainer extends LightningElement {
     get isAutomaiWatcherArticle() {
         return this.selectedArticleTitle === 'Automai Watcher';
     }
+    
+    // Strip out the original note section from the article content
+    get formattedArticleContent() {
+        if (!this.selectedArticleContent) return '';
+        
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = this.selectedArticleContent;
+        
+        // Remove all instances of note sections
+        const noteSections = tempDiv.querySelectorAll('.note, [class*="note"], .custom-note');
+        noteSections.forEach(note => note.remove());
+        
+        return tempDiv.innerHTML;
+    }
+
+       
 
     // Method to toggle the side menu
     toggleMenu() {
@@ -82,7 +99,7 @@ export default class KnowledgeBaseContainer extends LightningElement {
             setup: 'Setup and configuration',
             overview: 'Overview',
             // Director configuration submenu items
-            directorConfiguration: 'Director configuration',
+            directorConfiguration: 'Director Configuration',
             directorConfigurationsProperties: 'Director configurations: Properties',
             tasks: 'Director configurations: Tasks',
             users: 'Director configurations: Users',
@@ -90,17 +107,14 @@ export default class KnowledgeBaseContainer extends LightningElement {
             groupsDepartments: 'Director configurations: Departments',
             loadBalancing: 'Director configurations: Load Balance',
             // BotManager submenu items
-            botmanagerOverview: 'BotManager: Overview',
-            botmanagerInstallation: 'BotManager: Installation and Initial Configuration',
-            botmanagerManaging: 'BotManager: Customization in Config File',
-            botmanagerWorking: 'BotManager: Bots and rDesktop',
-            botmanagerMaintenance: 'BotManager: Maintenance, Troubleshooting, and Best Practices',
-            dashboardManagementTools:'BotManager: Dashboard and Management Tools',
+            
+            botmanagerGettingStarted: 'BotManager: Getting Started',
+            botmanagerAdvanced: 'BotManager: Advanced Configuration',
             // Other mappings
             profileAndResource: 'Profile Menu',
             directorLogs: 'Director Logs',
             botmanager: 'BotManager',
-            events: 'Events and Notifications',
+            events: 'Director: Events and Notifications',
             report: 'Reports',
             directorProjects: 'Director: Projects',
             directorSchedules: 'Director: Schedules',
@@ -140,58 +154,106 @@ export default class KnowledgeBaseContainer extends LightningElement {
         this.fetchArticleContent(articleTitle);
     }
 
+    
+
+    // Handle note link clicks with scroll behavior
+    handleNoteClick(event) {
+        event.preventDefault();
+        const tab = event.currentTarget.dataset.tab;
+        
+        // First update the content
+        this.handleMenuClick(event);
+        
+        // Then scroll to top after content is updated
+        Promise.resolve().then(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Also ensure the content div itself is scrolled to top
+            const contentDiv = this.template.querySelector('.content');
+            if (contentDiv) {
+                contentDiv.scrollTop = 0;
+            }
+        });
+    }
+
     // Fetch the article content
     fetchArticleContent(articleTitle) {
-        console.log('Fetching article with title:', articleTitle);
-
+        console.log('Fetching article:', articleTitle);
         getArticleByTitle({ title: articleTitle })
             .then(result => {
-                console.log('Fetched article:', result);
-
-                if (!result) {
-                    throw new Error('No article data returned');
-                }
-
-                // Access the fields directly from Knowledge__kav
-                const articleContent = result.Content__c || result.Article_Body__c || result.Summary;
-
-                if (!articleContent) {
-                    this.selectedArticleContent = 'This article exists but has no content. Please contact your administrator.';
-                    this.showToast('Warning', 'Article found but contains no content', 'warning');
-                    return;
-                }
-
-                const cleanContent = this.cleanHTML(articleContent);
-                this.selectedArticleContent = cleanContent;
+                if (!result) return;
+                
                 this.selectedArticleTitle = result.Title;
-
-                // Log the content for debugging
-                console.log('Article content:', articleContent);
+                const cleanContent = this.cleanHTML(result.Content__c);
+                
+                // Insert content using querySelector
+                const contentDiv = this.template.querySelector('.article-content');
+                if (contentDiv) {
+                    contentDiv.innerHTML = cleanContent;
+                    
+                    // Add click listeners to details/summary elements
+                    const details = contentDiv.querySelectorAll('details');
+                    details.forEach(detail => {
+                        detail.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            const summary = detail.querySelector('summary');
+                            if (summary === event.target) {
+                                detail.open = !detail.open;
+                            }
+                        });
+                    });
+                }
             })
             .catch(error => {
                 console.error('Error fetching article:', error);
                 const errorMessage = error.body?.message || error.message || 'Unknown error occurred';
-                this.selectedArticleContent = `Unable to load content: ${errorMessage}`;
+                const contentDiv = this.template.querySelector('.article-content');
+                if (contentDiv) {
+                    contentDiv.innerHTML = `Unable to load content: ${errorMessage}`;
+                }
                 this.showToast('Error', errorMessage, 'error');
             });
     }
 
     // Function to clean up the HTML
     cleanHTML(content) {
+        if (!content) return '';
+        
         const div = document.createElement('div');
         div.innerHTML = content;
-        // Remove any unwanted elements, e.g., background overlays
-        div.querySelectorAll('div.background-image-overlay').forEach(node => node.remove());
+        
+        // Remove unwanted elements
+        div.querySelectorAll('div.background-image-overlay, footer, .footer').forEach(node => node.remove());
+        
+        // Preserve list formatting
+        const lists = div.querySelectorAll('ol, ul');
+        lists.forEach(list => {
+            // Ensure ordered lists have numbers
+            if (list.tagName === 'OL') {
+                list.style.listStyleType = 'decimal';
+            }
+            // Ensure unordered lists have bullets
+            else if (list.tagName === 'UL') {
+                list.style.listStyleType = 'disc';
+            }
+            
+            // Ensure proper indentation
+            list.style.paddingLeft = '40px';
+            list.style.marginBottom = '1em';
+            
+            // Style list items
+            const items = list.querySelectorAll('li');
+            items.forEach(item => {
+                item.style.marginBottom = '0.5em';
+                item.style.lineHeight = '1.5';
+            });
+        });
+        
         return div.innerHTML;
     }
 
-    // Show a toast notification
-    showToast(title, message, variant) {
-        const event = new ShowToastEvent({
-            title: title,
-            message: message,
-            variant: variant,
-        });
-        this.dispatchEvent(event);
-    }
+    
 }
