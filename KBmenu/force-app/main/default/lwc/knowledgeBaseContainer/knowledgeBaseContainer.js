@@ -97,8 +97,9 @@ export default class KnowledgeBaseContainer extends LightningElement {
             usersAndRoles: 'User Roles and Group Permissions',
             computeOptimized: 'Compute Optimized',
             setup: 'Setup and configuration',
-            overview: 'Overview',
+            overview: 'Director Overview',
             // Director configuration submenu items
+            directorgettingstarted:'Director: Getting Started',
             directorConfiguration: 'Director Configuration',
             directorConfigurationsProperties: 'Director configurations: Properties',
             tasks: 'Director configurations: Tasks',
@@ -110,8 +111,9 @@ export default class KnowledgeBaseContainer extends LightningElement {
             
             botmanagerGettingStarted: 'BotManager: Getting Started',
             botmanagerAdvanced: 'BotManager: Advanced Configuration',
+            botmanager:'BotManager',
             // Other mappings
-            profileAndResource: 'Profile Menu',
+            profileAndResource: 'Director Settings',
             directorLogs: 'Director Logs',
             botmanager: 'BotManager',
             events: 'Director: Events and Notifications',

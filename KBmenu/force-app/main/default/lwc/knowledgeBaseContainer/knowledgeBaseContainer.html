@@ -20,10 +20,16 @@
             <lightning-icon icon-name={setupConfigIconName} size="x-small" class="submenu-toggle"
               onclick={toggleSubmenu} data-submenu="isSetupConfigExpanded">
             </lightning-icon>
-            <span onclick={handleMenuClick} data-tab="directorConfiguration">Director configuration</span>
+            <span onclick={handleMenuClick} data-tab="directorgettingstarted">Director: Getting Started</span>
           </div>
           <template if:true={isSetupConfigExpanded}>
             <ul class="submenu">
+              <li>
+                <div class="menu-item">
+                  <span class="placeholder"></span>
+                  <span onclick={handleMenuClick} data-tab="directorConfiguration">Director configuration</span>
+                </div>
+              </li>
               <li>
                 <div class="menu-item">
                   <span class="placeholder"></span>
@@ -36,6 +42,7 @@
                   <span onclick={handleMenuClick} data-tab="directorLogs">Director Logs</span>
                 </div>
               </li>
+              
             </ul>
           </template>
         </li>
