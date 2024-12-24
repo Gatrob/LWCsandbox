@@ -1,48 +1,45 @@
-public with sharing class KnowledgeArticleController {
-    public class KnowledgeArticleException extends Exception {}
-    
+public without sharing class KnowledgeArticleController {
     @AuraEnabled(cacheable=true)
     public static Knowledge__kav getArticleByTitle(String title) {
         try {
+            // Debug information
+            System.debug('Current User ID: ' + UserInfo.getUserId());
+            System.debug('Current User Profile: ' + [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name);
+            System.debug('Current User Type: ' + UserInfo.getUserType());
+            
             if (title == null) {
-                throw new KnowledgeArticleException('Title cannot be null');
-            }
-
-            // Check field-level security for all possible content fields
-            if (!Schema.sObjectType.Knowledge__kav.fields.Content__c.isAccessible() ||
-                !Schema.sObjectType.Knowledge__kav.fields.Summary.isAccessible() ||
-                !Schema.sObjectType.Knowledge__kav.fields.Title.isAccessible()) {
-                throw new KnowledgeArticleException('Insufficient access to article fields');
+                throw new AuraHandledException('Title cannot be null');
             }
 
             String userLanguage = UserInfo.getLanguage();
             
-            // Query with only the fields that exist in your org
+            // Debug query
             String query = 'SELECT Id, Title, UrlName, Summary, Content__c ' +
                          'FROM Knowledge__kav ' +
                          'WHERE Title = :title ' +
                          'AND Language = :userLanguage ';
-                         
+            
             if (!Test.isRunningTest()) {
                 query += 'AND PublishStatus = \'Online\' ';
             }
             
             query += 'LIMIT 1';
             
+            System.debug('Executing query: ' + query);
+            
             List<Knowledge__kav> articles = Database.query(query);
+            System.debug('Query results: ' + articles);
 
             if (!articles.isEmpty()) {
-                // Log the retrieved article for debugging
-                System.debug('Retrieved article: ' + articles[0]);
                 return articles[0];
-            } else {
-                throw new KnowledgeArticleException('No article found with title: ' + title);
             }
             
-        } catch (KnowledgeArticleException e) {
-            throw new AuraHandledException(e.getMessage());
+            throw new AuraHandledException('No published article found with title: ' + title);
+            
         } catch (Exception e) {
-            throw new AuraHandledException('An error occurred: ' + e.getMessage());
+            System.debug('Error in getArticleByTitle: ' + e.getMessage());
+            System.debug('Error stack trace: ' + e.getStackTraceString());
+            throw new AuraHandledException(e.getMessage());
         }
     }
 }

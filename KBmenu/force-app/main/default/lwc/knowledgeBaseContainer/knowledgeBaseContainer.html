@@ -1,311 +1,443 @@
 <template>
-  <div class="container">
-    <div class="menu" if:true={isMenuVisible}>
-      <div class="menu-header">
-        <h2>Automai Director</h2>
-        <span class="close-button" onclick={toggleMenu}>×</span>
-      </div>
-      <ul>
-        <!-- Overview -->
-        <li>
-          <div class="menu-item">
-            <span class="placeholder"></span>
-            <span onclick={handleMenuClick} data-tab="overview">Overview</span>
+  <div class="slds-grid slds-wrap">
+    <!-- Menu Column -->
+    <div class="slds-col slds-size_4-of-12"> <!-- Menu container -->
+      <div class="menu" if:true={isMenuVisible}>
+          <div class="menu-header">
+            <h2>Automai Director</h2>
+            <span class="close-button" onclick={toggleMenu}>×</span>
           </div>
-        </li>
-
-        <!-- Setup and configuration -->
-        <li>
-          <div class="menu-item">
-            <lightning-icon icon-name={setupConfigIconName} size="x-small" class="submenu-toggle"
-              onclick={toggleSubmenu} data-submenu="isSetupConfigExpanded">
-            </lightning-icon>
-            <span onclick={handleMenuClick} data-tab="directorgettingstarted">Director: Getting Started</span>
-          </div>
-          <template if:true={isSetupConfigExpanded}>
-            <ul class="submenu">
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="directorConfiguration">Director configuration</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="profileAndResource">Profile & Resource</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="directorLogs">Director Logs</span>
-                </div>
-              </li>
-              
-            </ul>
-          </template>
-        </li>
-
-
-        <!-- BotManager -->
-        <li>
-          <div class="menu-item">
-            <lightning-icon icon-name={botManagerIconName} size="x-small" class="submenu-toggle" onclick={toggleSubmenu}
-              data-submenu="isBotManagerExpanded">
-            </lightning-icon>
-            <span onclick={handleMenuClick} data-tab="botmanager">BotManager</span>
-          </div>
-          <template if:true={isBotManagerExpanded}>
-            <ul class="submenu">
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="botmanagerGettingStarted">Getting Started</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="botmanagerAdvanced">Advanced Configuration</span>
-                </div>
-              </li>
-            </ul>
-          </template>
-        </li>
-
-        <!-- Automai Watcher -->
-        <li>
-          <div class="menu-item">
-            <lightning-icon icon-name={automaiWatcherIconName} size="x-small" class="submenu-toggle"
-              onclick={toggleSubmenu} data-submenu="isAutomaiWatcherExpanded">
-            </lightning-icon>
-            <span onclick={handleMenuClick} data-tab="automaiWatcher">Automai Watcher</span>
-          </div>
-          <template if:true={isAutomaiWatcherExpanded}>
-            <ul class="submenu">
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiWatcherDashboard">Dashboard</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="processMonitor">Process Monitor</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiWatcherReports">Reports</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="rWatchers">rWatchers</span>
-                </div>
-              </li>
-            </ul>
-          </template>
-        </li>
-
-        <!-- Automai Loader -->
-        <li>
-          <div class="menu-item">
-            <lightning-icon icon-name={automaiLoaderIconName} size="x-small" class="submenu-toggle"
-              onclick={toggleSubmenu} data-submenu="isAutomaiLoaderExpanded">
-            </lightning-icon>
-            <span onclick={handleMenuClick} data-tab="automaiLoader">Automai Loader</span>
-          </div>
-          <template if:true={isAutomaiLoaderExpanded}>
-            <ul class="submenu">
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiLoaderDashboard">Dashboard</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="testPlan">Test Plan</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="testRuns">Test Runs</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="alBotManagers">BotManagers</span>
-                </div>
-              </li>
-            </ul>
-          </template>
-        </li>
-
-        <!-- Automai Tester -->
-        <li>
-          <div class="menu-item">
-            <lightning-icon icon-name={automaiTesterIconName} size="x-small" class="submenu-toggle"
-              onclick={toggleSubmenu} data-submenu="isAutomaiTesterExpanded">
-            </lightning-icon>
-            <span onclick={handleMenuClick} data-tab="automaiTester">Automai Tester</span>
-          </div>
-          <template if:true={isAutomaiTesterExpanded}>
-            <ul class="submenu">
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiTesterDashboard">Dashboard</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiTesterTestPlan">Test Plan</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiTesterTestRuns">Test Runs</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="rTesters">rTesters</span>
-                </div>
-              </li>
-            </ul>
-          </template>
-        </li>
-
-        <!-- Automai Worker -->
-        <li>
-          <div class="menu-item">
-            <lightning-icon icon-name={automaiWorkerIconName} size="x-small" class="submenu-toggle"
-              onclick={toggleSubmenu} data-submenu="isAutomaiWorkerExpanded">
-            </lightning-icon>
-            <span onclick={handleMenuClick} data-tab="automaiWorker">Automai Worker</span>
-          </div>
-          <template if:true={isAutomaiWorkerExpanded}>
-            <ul class="submenu">
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiWorkerDashboard">Dashboard</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="processFlows">Process Flows</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="automaiWorkerReports">Reports</span>
-                </div>
-              </li>
-              <li>
-                <div class="menu-item">
-                  <span class="placeholder"></span>
-                  <span onclick={handleMenuClick} data-tab="rWorkers">rWorkers</span>
-                </div>
-              </li>
-            </ul>
-          </template>
-        </li>
-
-        <!-- Single menu items -->
-        <li>
-          <div class="menu-item">
-            <span class="placeholder"></span>
-            <span onclick={handleMenuClick} data-tab="directorSchedules">Schedules</span>
-          </div>
-        </li>
-        <li>
-          <div class="menu-item">
-            <span class="placeholder"></span>
-            <span onclick={handleMenuClick} data-tab="directorProjects">Projects</span>
-          </div>
-        </li>
-        <li>
-          <div class="menu-item">
-            <span class="placeholder"></span>
-            <span onclick={handleMenuClick} data-tab="events">Events and Notifications</span>
-          </div>
-        </li>
-        <li>
-          <div class="menu-item">
-            <span class="placeholder"></span>
-            <span onclick={handleMenuClick} data-tab="usersAndRoles">Users and Roles</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Show Menu Button -->
-    <template if:false={isMenuVisible}>
-      <button class="show-menu-button" onclick={toggleMenu}>
-        <span class="hamburger-icon">
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-        </span>
-      </button>
-    </template>
-
-    <!-- Content Area -->
-    <div class="content">
-      <template if:true={selectedArticleTitle}>
-        <h2>{selectedArticleTitle}</h2>
-      </template>
-
-      <div class="article-content" lwc:dom="manual">
-
-      </div>
-
-
-
-
-      <!-- Update just the note section in your template -->
-      <template if:true={isAutomaiWatcherArticle}>
-        <div class="custom-note">
-          ⓘ <strong>Note:</strong> For detailed information about specific components, refer to:
           <ul>
+            <!-- Overview -->
             <li>
-              <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="processMonitor">
-                Process Monitors
-              </a>
+              <div class="menu-item">
+                <span class="placeholder"></span>
+                <span onclick={handleMenuClick} data-tab="overview">Overview</span>
+              </div>
+            </li>
+
+            <!-- Setup and configuration -->
+            <li>
+              <div class="menu-item">
+                <lightning-icon icon-name={setupConfigIconName} size="x-small" class="submenu-toggle"
+                  onclick={toggleSubmenu} data-submenu="isSetupConfigExpanded">
+                </lightning-icon>
+                <span onclick={handleMenuClick} data-tab="directorgettingstarted">Director: Getting Started</span>
+              </div>
+              <template if:true={isSetupConfigExpanded}>
+                <ul class="submenu">
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="directorConfiguration">Director configuration</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="profileAndResource">Profile & Resource</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="directorLogs">Director Logs</span>
+                    </div>
+                  </li>
+
+                </ul>
+              </template>
+            </li>
+
+
+            <!-- BotManager -->
+            <li>
+              <div class="menu-item">
+                <lightning-icon icon-name={botManagerIconName} size="x-small" class="submenu-toggle"
+                  onclick={toggleSubmenu} data-submenu="isBotManagerExpanded">
+                </lightning-icon>
+                <span onclick={handleMenuClick} data-tab="botmanager">BotManager</span>
+              </div>
+              <template if:true={isBotManagerExpanded}>
+                <ul class="submenu">
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="botmanagerGettingStarted">Getting Started</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="botmanagerAdvanced">Advanced Configuration</span>
+                    </div>
+                  </li>
+                </ul>
+              </template>
+            </li>
+
+            <!-- Automai Watcher -->
+            <li>
+              <div class="menu-item">
+                <lightning-icon icon-name={automaiWatcherIconName} size="x-small" class="submenu-toggle"
+                  onclick={toggleSubmenu} data-submenu="isAutomaiWatcherExpanded">
+                </lightning-icon>
+                <span onclick={handleMenuClick} data-tab="automaiWatcher">Automai Watcher</span>
+              </div>
+              <template if:true={isAutomaiWatcherExpanded}>
+                <ul class="submenu">
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiWatcherDashboard">Dashboard</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="processMonitor">Process Monitor</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiWatcherReports">Reports</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="rWatchers">rWatchers</span>
+                    </div>
+                  </li>
+                </ul>
+              </template>
+            </li>
+
+            <!-- Automai Loader -->
+            <li>
+              <div class="menu-item">
+                <lightning-icon icon-name={automaiLoaderIconName} size="x-small" class="submenu-toggle"
+                  onclick={toggleSubmenu} data-submenu="isAutomaiLoaderExpanded">
+                </lightning-icon>
+                <span onclick={handleMenuClick} data-tab="automaiLoader">Automai Loader</span>
+              </div>
+              <template if:true={isAutomaiLoaderExpanded}>
+                <ul class="submenu">
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiLoaderDashboard">Dashboard</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="testPlan">Test Plan</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="testRuns">Test Runs</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="alBotManagers">BotManagers</span>
+                    </div>
+                  </li>
+                </ul>
+              </template>
+            </li>
+
+            <!-- Automai Tester -->
+            <li>
+              <div class="menu-item">
+                <lightning-icon icon-name={automaiTesterIconName} size="x-small" class="submenu-toggle"
+                  onclick={toggleSubmenu} data-submenu="isAutomaiTesterExpanded">
+                </lightning-icon>
+                <span onclick={handleMenuClick} data-tab="automaiTester">Automai Tester</span>
+              </div>
+              <template if:true={isAutomaiTesterExpanded}>
+                <ul class="submenu">
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiTesterDashboard">Dashboard</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiTesterTestPlan">Test Plan</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiTesterTestRuns">Test Runs</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="rTesters">rTesters</span>
+                    </div>
+                  </li>
+                </ul>
+              </template>
+            </li>
+
+            <!-- Automai Worker -->
+            <li>
+              <div class="menu-item">
+                <lightning-icon icon-name={automaiWorkerIconName} size="x-small" class="submenu-toggle"
+                  onclick={toggleSubmenu} data-submenu="isAutomaiWorkerExpanded">
+                </lightning-icon>
+                <span onclick={handleMenuClick} data-tab="automaiWorker">Automai Worker</span>
+              </div>
+              <template if:true={isAutomaiWorkerExpanded}>
+                <ul class="submenu">
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiWorkerDashboard">Dashboard</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="processFlows">Process Flows</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="automaiWorkerReports">Reports</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="menu-item">
+                      <span class="placeholder"></span>
+                      <span onclick={handleMenuClick} data-tab="rWorkers">rWorkers</span>
+                    </div>
+                  </li>
+                </ul>
+              </template>
+            </li>
+
+            <!-- Single menu items -->
+            <li>
+              <div class="menu-item">
+                <span class="placeholder"></span>
+                <span onclick={handleMenuClick} data-tab="directorSchedules">Schedules</span>
+              </div>
             </li>
             <li>
-              <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiWatcherDashboard">
-                Dashboard
-              </a>
+              <div class="menu-item">
+                <span class="placeholder"></span>
+                <span onclick={handleMenuClick} data-tab="directorProjects">Projects</span>
+              </div>
             </li>
             <li>
-              <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiWatcherReports">
-                Reports
-              </a>
+              <div class="menu-item">
+                <span class="placeholder"></span>
+                <span onclick={handleMenuClick} data-tab="events">Events and Notifications</span>
+              </div>
             </li>
             <li>
-              <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="rWatchers">
-                rWatchers
-              </a>
+              <div class="menu-item">
+                <span class="placeholder"></span>
+                <span onclick={handleMenuClick} data-tab="usersAndRoles">Users and Roles</span>
+              </div>
             </li>
           </ul>
         </div>
-      </template>
-    </div>
-  </div>
+
+        <!-- Show Menu Button -->
+        <template if:false={isMenuVisible}>
+          <button class="show-menu-button" onclick={toggleMenu}>
+            <span class="hamburger-icon">
+              <span class="hamburger-bar"></span>
+              <span class="hamburger-bar"></span>
+              <span class="hamburger-bar"></span>
+            </span>
+          </button>
+        </template>
+      </div>
+
+        <!-- Content Area -->
+        <div class="slds-col slds-size_8-of-12">
+          <div class="content">
+
+
+            <div class="article-content" lwc:dom="manual">
+
+            </div>
+
+
+
+
+            <!-- Update just the note section in your template -->
+            <template if:true={isAutomaiWatcherArticle}>
+              <div class="custom-note">
+                ⓘ <strong>Note:</strong> For detailed information about specific components, refer to:
+                <ul>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="processMonitor">
+                      Process Monitors
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiWatcherDashboard">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiWatcherReports">
+                      Reports
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="rWatchers">
+                      rWatchers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </template>
+
+            <!-- Note section for Automai Loader -->
+            <template if:true={isAutomaiLoaderArticle}>
+              <div class="custom-note">
+                ⓘ <strong>Note:</strong> For detailed information about specific components, refer to:
+                <ul>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiLoaderDashboard">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="testPlan">
+                      Test Plans
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="testRuns">
+                      Test Runs
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="alBotManagers">
+                      BotManagers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </template>
+
+            <!-- Note section for Automai Tester -->
+            <template if:true={isAutomaiTesterArticle}>
+              <div class="custom-note">
+                ⓘ <strong>Note:</strong> For detailed information about specific components, refer to:
+                <ul>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiTesterDashboard">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiTesterTestPlan">
+                      Test Plans
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiTesterTestRuns">
+                      Test Runs
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="rTesters">
+                      rTesters
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </template>
+
+            <!-- Note section for Automai Worker -->
+            <template if:true={isAutomaiWorkerArticle}>
+              <div class="custom-note">
+                ⓘ <strong>Note:</strong> For detailed information about specific components, refer to:
+                <ul>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiWorkerDashboard">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="processFlows">
+                      Process Flows
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="automaiWorkerReports">
+                      Reports
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="rWorkers">
+                      rWorkers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </template>
+            <!-- Note section for BotManager -->
+            <template if:true={isBotManagerArticle}>
+              <div class="custom-note">
+                ⓘ <strong>Note:</strong> For detailed information about BotManager, refer to:
+                <ul>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="botmanagerGettingStarted">
+                      Getting Started
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="botmanagerAdvanced">
+                      Advanced Configuration
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </template>
+
+            <!-- Note section for Director: Getting Started -->
+            <template if:true={isDirectorGettingStartedArticle}>
+              <div class="custom-note">
+                ⓘ <strong>Note:</strong> For detailed information about Director configuration and settings, refer to:
+                <ul>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="directorConfiguration">
+                      Director Configuration
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="profileAndResource">
+                      Profile & Resource
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" onclick={handleNoteClick} data-tab="directorLogs">
+                      Director Logs
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
 </template>
