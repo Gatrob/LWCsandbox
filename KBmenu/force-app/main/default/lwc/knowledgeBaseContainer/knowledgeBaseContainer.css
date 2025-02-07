@@ -14,10 +14,12 @@ html, body {
   min-height: 100vh;
   flex-direction: row;
   width: 100%;
+
 }
 
 /* Menu styles */
 .menu {
+  flex: 0 0 auto; /* Don't grow, don't shrink, size based on content */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -29,13 +31,15 @@ html, body {
 /* Content area styles */
 .content {
     padding: 20px;
-    margin-left: 10px;
+    margin-left: 0;
     padding-top: 60px;
     overflow-y: scroll;
     background-color: #ffffff;
-    height: 90vh;
+    height: 100vh;
     font-size: 14pt;
     line-height: 1.714;
+    flex: 1;
+    min-width: 0; /* Prevents content from overflowing */
 }
 
 /* Typography for content area */
@@ -711,4 +715,82 @@ footer,
 /* Hide unwanted elements */
 div.background-image-overlay.lwc-6j9an5vbrcd {
   display: none;
+}
+
+/* Responsive adjustments */
+@media screen and (min-width: 1200px) {
+  .menu {
+      width: 350px;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .menu {
+      width: 300px;
+  }
+  .menu-item > span {
+      font-size: 0.95em;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .menu {
+      width: 250px;
+  }
+  .menu-item > span {
+      font-size: 0.9em;
+  }
+}
+
+/* Mobile view */
+@media screen and (max-width: 768px) {
+  .container {
+      position: relative; /* For absolute positioning of menu */
+  }
+  
+  .menu {
+      position: absolute;
+      left: -250px; /* Hide off-screen by default */
+      top: 0;
+      bottom: 0;
+      width: 250px;
+      z-index: 1000;
+      transition: left 0.3s ease;
+  }
+  
+  .menu.visible {
+      left: 0;
+  }
+  
+  /* When menu is hidden, content takes full width */
+  .menu-hidden .content {
+      width: 100%;
+  }
+}
+
+/* Menu toggle behavior */
+.menu-hidden .menu {
+  display: none;
+}
+
+.menu.visible {
+  display: flex;
+}
+
+.menu-item > span.selected,
+.menu-item > span.selected:hover {
+  color: #0078d4;
+  font-weight: 600;
+  position: relative;
+}
+.menu-item > span.selected::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 70%;
+  background-color: #0078d4;
+  border-radius: 0 2px 2px 0;
 }

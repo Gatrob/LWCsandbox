@@ -19,61 +19,18 @@
             <!-- Setup and configuration -->
             <li>
               <div class="menu-item">
-                <lightning-icon icon-name={setupConfigIconName} size="x-small" class="submenu-toggle"
-                  onclick={toggleSubmenu} data-submenu="isSetupConfigExpanded">
-                </lightning-icon>
+                <span class="placeholder"></span>
                 <span onclick={handleMenuClick} data-tab="directorgettingstarted">Director: Getting Started</span>
               </div>
-              <template if:true={isSetupConfigExpanded}>
-                <ul class="submenu">
-                  <li>
-                    <div class="menu-item">
-                      <span class="placeholder"></span>
-                      <span onclick={handleMenuClick} data-tab="directorConfiguration">Director configuration</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="menu-item">
-                      <span class="placeholder"></span>
-                      <span onclick={handleMenuClick} data-tab="profileAndResource">Profile & Resource</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="menu-item">
-                      <span class="placeholder"></span>
-                      <span onclick={handleMenuClick} data-tab="directorLogs">Director Logs</span>
-                    </div>
-                  </li>
-
-                </ul>
-              </template>
             </li>
 
 
             <!-- BotManager -->
             <li>
               <div class="menu-item">
-                <lightning-icon icon-name={botManagerIconName} size="x-small" class="submenu-toggle"
-                  onclick={toggleSubmenu} data-submenu="isBotManagerExpanded">
-                </lightning-icon>
+                <span class="placeholder"></span>
                 <span onclick={handleMenuClick} data-tab="botmanager">BotManager</span>
               </div>
-              <template if:true={isBotManagerExpanded}>
-                <ul class="submenu">
-                  <li>
-                    <div class="menu-item">
-                      <span class="placeholder"></span>
-                      <span onclick={handleMenuClick} data-tab="botmanagerGettingStarted">Getting Started</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="menu-item">
-                      <span class="placeholder"></span>
-                      <span onclick={handleMenuClick} data-tab="botmanagerAdvanced">Advanced Configuration</span>
-                    </div>
-                  </li>
-                </ul>
-              </template>
             </li>
 
             <!-- Automai Watcher -->

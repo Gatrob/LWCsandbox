@@ -18,6 +18,7 @@ export default class KnowledgeBaseContainer extends LightningElement {
     @track isAutomaiWorkerExpanded = false;
     @track isBotManagerExpanded = false;
     @track isBotManagerInstallationExpanded = false;
+    @track selectedMenuTab = '';
 
     // Getter methods for icon names
     get setupConfigIconName() {
@@ -71,14 +72,45 @@ export default class KnowledgeBaseContainer extends LightningElement {
     }
 
        
-
+    // Lifecycle hook when component is inserted into the DOM
+    connectedCallback() {
+        // Set overview as default and fetch its content
+        this.selectedMenuTab = 'overview';
+        this.fetchArticleContent('Director Overview');
+        
+        // Set selected state for overview menu item after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            const overviewItem = this.template.querySelector('.menu-item > span[data-tab="overview"]');
+            if (overviewItem) {
+                overviewItem.classList.add('selected');
+            }
+        }, 0);
+    }
+    
     // Method to toggle the side menu
     toggleMenu() {
         this.isMenuVisible = !this.isMenuVisible;
         const containerElement = this.template.querySelector('.container');
-        if (containerElement) {
+        const contentColumn = this.template.querySelector('.slds-col.slds-size_8-of-12');
+        
+        if (containerElement && contentColumn) {
             containerElement.classList.toggle('menu-hidden');
+            
+            // Adjust content column width when menu is hidden
+            if (!this.isMenuVisible) {
+                contentColumn.style.width = '100%';
+                contentColumn.style.marginLeft = '40px'; // Space for menu toggle button
+                contentColumn.style.transition = 'all 0.3s ease';
+            } else {
+                contentColumn.style.width = '';
+                contentColumn.style.marginLeft = '';
+            }
         }
+        
+        // Force a re-render to adjust content layout
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 300); // After transition completes
     }
 
     // Method to toggle submenu visibility dynamically
@@ -91,6 +123,17 @@ export default class KnowledgeBaseContainer extends LightningElement {
     handleMenuClick(event) {
         event.preventDefault();
         const tab = event.currentTarget.dataset.tab;
+        
+        // Update selected menu item
+        this.selectedMenuTab = tab;
+        
+        // Remove selected class from all menu items
+        this.template.querySelectorAll('.menu-item > span').forEach(span => {
+            span.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked menu item
+        event.currentTarget.classList.add('selected');
 
         const customTitles = {
             // Existing mappings
@@ -109,13 +152,10 @@ export default class KnowledgeBaseContainer extends LightningElement {
             loadBalancing: 'Director configurations: Load Balance',
             // BotManager submenu items
             
-            botmanagerGettingStarted: 'BotManager: Getting Started',
-            botmanagerAdvanced: 'BotManager: Advanced Configuration',
-            botmanager:'BotManager',
+            botmanager:'BotManager: Getting Started',
             // Other mappings
             profileAndResource: 'Director Settings',
             directorLogs: 'Director Logs',
-            botmanager: 'BotManager',
             events: 'Director: Events and Notifications',
             report: 'Reports',
             directorProjects: 'Director: Projects',
@@ -149,14 +189,30 @@ export default class KnowledgeBaseContainer extends LightningElement {
 
         let articleTitle = customTitles[tab] || tab.charAt(0).toUpperCase() + tab.slice(1);
 
-        // Set isUsersAndRoles to true when the corresponding tab is clicked
-        this.isUsersAndRoles = (tab === 'usersAndRoles');
+        // Update selected menu item
+        this.selectedMenuTab = tab;
 
         // Fetch the article content for the selected tab and update the content
-        this.fetchArticleContent(articleTitle);
+        this.fetchArticleContent(articleTitle).then(() => {
+            // After content is fetched and rendered, scroll to top
+            this.scrollToTop();
+        });
     }
 
-    
+    // New method to handle scrolling
+    scrollToTop() {
+        // Get the content div
+        const contentDiv = this.template.querySelector('.content');
+        if (contentDiv) {
+            contentDiv.scrollTop = 0;
+        }
+        
+        // Also scroll the article content div if it exists
+        const articleContentDiv = this.template.querySelector('.article-content');
+        if (articleContentDiv) {
+            articleContentDiv.scrollTop = 0;
+        }
+    }
 
     // Handle note link clicks with scroll behavior
     handleNoteClick(event) {
@@ -182,42 +238,41 @@ export default class KnowledgeBaseContainer extends LightningElement {
     }
 
     // Fetch the article content
-    fetchArticleContent(articleTitle) {
+    async fetchArticleContent(articleTitle) {
         console.log('Fetching article:', articleTitle);
-        getArticleByTitle({ title: articleTitle })
-            .then(result => {
-                if (!result) return;
+        try {
+            const result = await getArticleByTitle({ title: articleTitle });
+            if (!result) return;
+            
+            this.selectedArticleTitle = result.Title;
+            const cleanContent = this.cleanHTML(result.Content__c);
+            
+            // Insert content using querySelector
+            const contentDiv = this.template.querySelector('.article-content');
+            if (contentDiv) {
+                contentDiv.innerHTML = cleanContent;
                 
-                this.selectedArticleTitle = result.Title;
-                const cleanContent = this.cleanHTML(result.Content__c);
-                
-                // Insert content using querySelector
-                const contentDiv = this.template.querySelector('.article-content');
-                if (contentDiv) {
-                    contentDiv.innerHTML = cleanContent;
-                    
-                    // Add click listeners to details/summary elements
-                    const details = contentDiv.querySelectorAll('details');
-                    details.forEach(detail => {
-                        detail.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            const summary = detail.querySelector('summary');
-                            if (summary === event.target) {
-                                detail.open = !detail.open;
-                            }
-                        });
+                // Add click listeners to details/summary elements
+                const details = contentDiv.querySelectorAll('details');
+                details.forEach(detail => {
+                    detail.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const summary = detail.querySelector('summary');
+                        if (summary === event.target) {
+                            detail.open = !detail.open;
+                        }
                     });
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching article:', error);
-                const errorMessage = error.body?.message || error.message || 'Unknown error occurred';
-                const contentDiv = this.template.querySelector('.article-content');
-                if (contentDiv) {
-                    contentDiv.innerHTML = `Unable to load content: ${errorMessage}`;
-                }
-                this.showToast('Error', errorMessage, 'error');
-            });
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching article:', error);
+            const errorMessage = error.body?.message || error.message || 'Unknown error occurred';
+            const contentDiv = this.template.querySelector('.article-content');
+            if (contentDiv) {
+                contentDiv.innerHTML = `Unable to load content: ${errorMessage}`;
+            }
+            this.showToast('Error', errorMessage, 'error');
+        }
     }
 
     // Function to clean up the HTML
